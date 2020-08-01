@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: node@12.18.3
+    working_directiory: ~/repo
+
+    steps:
+      - checkout
+
+    # Download and cache dependencies
+    - restore_cche:
+      keys:
+        - v1-dependencies-{{checksum "package.json"}}
+        #fallback to using the latest cache ifno exact match is found
+        - v1-dependencies-
+
+    - run: yarn install
+
+    - save_cache:
+      paths
+        - node_modules
+        key: v1-dependencies-{{checksum "package.json"}}
+    
+    #run tests
+    - run: yarn test
+
+    - run: yarn build
+
+    - run: yarn heroku:deploy
