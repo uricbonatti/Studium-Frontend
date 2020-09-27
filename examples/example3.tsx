@@ -1,11 +1,10 @@
-import React from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import "../../styles/App.css";
-import logo from "../../assets/logo.svg";
-import allPapers from "../../graphql/Query/allPapers";
-import "./styles.css";
-import { Link } from "react-router-dom";
-import newPaper from "../../graphql/Mutation/newPaper";
+import React from 'react';
+import { useQuery, useMutation } from '@apollo/client';
+import '../../styles/App.css';
+import allPapers from '../../graphql/Query/allPapers';
+import './styles.css';
+import { Link } from 'react-router-dom';
+import newPaper from '../../graphql/Mutation/newPaper';
 
 interface Tag {
   id: number;
@@ -34,9 +33,7 @@ const Home = () => {
     genericPaper,
     { loading: mutationLoading, error: mutationError, data: dataMutation },
   ] = useMutation(newPaper);
-  if (loading) {
-    return <img src={logo} className="App-logo" alt="logo" />;
-  }
+
   if (!data) {
     return <p>Repository is empty</p>;
   }
@@ -62,14 +59,14 @@ const Home = () => {
         onClick={(e) => {
           e.preventDefault();
           const name = `Let's Go ${papers.length + 1}`;
-          const author = "Anyone";
-          const text = "aheuaheuhauhsjnen n ienqkwnea";
+          const author = 'Anyone';
+          const text = 'aheuaheuhauhsjnen n ienqkwnea';
           genericPaper({
             variables: {
               name,
               author,
               text,
-              tags: [{ tech: "valore" }, { tech: "data validation" }],
+              tags: [{ tech: 'valore' }, { tech: 'data validation' }],
             },
           });
           refetch();
