@@ -1,37 +1,98 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import {
+  FiCoffee,
+  FiZap,
+  FiFileText,
+  FiThumbsUp,
+  FiEdit,
+} from 'react-icons/fi';
+import { FaLinkedin, FaGithubSquare } from 'react-icons/fa';
+import { useMutation } from '@apollo/client';
+
+import Header from '../../components/Header';
+import { useAuth, User } from '../../hooks/auth';
+import defaultAvatar from '../../assets/default-user-img.jpg';
+import ExpBar from '../../components/ExpBar';
+import UserActivitySummaryQuery from '../../graphql/User/UserActivitySummaryQuery';
+import graphqlApi from '../../services/graphqlApi';
+
 import {
   Container,
   ProfileSummary,
   Box,
   Activity,
+  Interaction,
   PostPublished,
-  Title,
   SocialNetwork,
+  ScrollableContent,
+  Description,
 } from './styles';
+import ModalEditUser from '../../components/ModalEditUser';
 
-import Header from '../../components/Header';
-import { useAuth } from '../../hooks/auth';
-import defaultAvatar from '../../assets/default-user-img.jpg';
-import ExpBar from '../../components/ExpBar';
-import { FiShare2, FiCoffee, FiZap } from 'react-icons/fi';
-import { FaLinkedin, FaGithubSquare } from 'react-icons/fa';
+interface Post {
+  id: string;
+  title: string;
+  created_at: Date;
+}
 
-const activitySum = {
-  posts: 2,
-  comments: 16,
-  exp: 1500,
-};
+interface IUserActivity {
+  postsLiked: number;
+  postsCreated: number;
+  commentsLiked: number;
+  commentsCreated: number;
+}
+export interface ISummary {
+  lastWeek: IUserActivity;
+  weekExp: number;
+  lastWeekPosts: Post[];
+}
 
 const UserProfile: React.FC = () => {
   const { user } = useAuth();
-  console.table(user);
-  const expPercent = 80;
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [activity, setActivity] = useState<IUserActivity>({} as IUserActivity);
+  const [exp, setExp] = useState<number>(0);
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+
+  useEffect(() => {
+    graphqlApi
+      .query({ query: UserActivitySummaryQuery, variables: { id: user.id } })
+      .then((resp) => {
+        console.table(resp);
+        const {
+          lastWeekPosts,
+          weekExp,
+          lastWeek,
+        }: ISummary = resp.data.userSummary;
+        setPosts([...lastWeekPosts]);
+        setActivity({ ...lastWeek });
+        setExp(weekExp);
+        console.table(resp.data.userSummary);
+      })
+      .catch((err) => console.error(err));
+  }, [user.id]);
+
+  async function handleUpdateUser(
+    userToEdit: Omit<User, 'id' | 'exp_percent' | 'level'>,
+  ): Promise<void> {
+    console.table(userToEdit);
+  }
+
+  function toggleUpdateModal(): void {
+    setUpdateModalOpen(!updateModalOpen);
+  }
   return (
     <>
       <Header />
+      <ModalEditUser
+        isOpen={updateModalOpen}
+        setIsOpen={toggleUpdateModal}
+        handleUpdateUser={handleUpdateUser}
+        editingUser={user}
+      />
       <Container>
-        <ProfileSummary className="profile">
-          <img src={user.avatar || defaultAvatar} alt={user.name} />
+        <ProfileSummary>
+          <img src={user.avatar_url || defaultAvatar} alt={user.name} />
           <div>
             <div>
               <h1>
@@ -39,88 +100,77 @@ const UserProfile: React.FC = () => {
                 <strong>{`[ Level ${user.level} ]`}</strong>
               </h1>
             </div>
-            <ExpBar expPercent={expPercent} expColor="red" />
-            <p>{user.description}</p>
+            <ExpBar expPercent={user.exp_percent} expColor="red" />
+            {user.description && <Description>{user.description}</Description>}
             <SocialNetwork>
               {user.linkedin && (
-                <a
-                  className="linkedin"
-                  href="https://www.linkedin.com/in/uric-bonatti-cardoso-820275132/"
-                >
-                  <FaLinkedin /> {user.name}
+                <a href={user.linkedin}>
+                  <FaLinkedin color="blue" />
+                  <p>{user.name}</p>
                 </a>
               )}
               {user.github && (
-                <a
-                  className="github"
-                  href={`https://github.com/${user.github}`}
-                >
-                  <FaGithubSquare /> {user.github}
+                <a href={`https://github.com/${user.github}`}>
+                  <FaGithubSquare color="#000" /> <p>{user.github}</p>
                 </a>
               )}
             </SocialNetwork>
           </div>
+          <div>
+            ]
+            <button type="button" onClick={() => toggleUpdateModal()}>
+              <FiEdit size={30} color="red" />
+            </button>
+          </div>
         </ProfileSummary>
         <Box id="badges">
-          <Title>Conquistas</Title>
+          <p>Conquistas</p>
           <strong>Conquistas</strong>
         </Box>
         <Box id="papers">
           <p>Posts Recentes</p>
-          <PostPublished>
-            <p>Testes de Publicação</p>
-            <span>27 set.</span>
-          </PostPublished>
-          <PostPublished>
-            <p>Testes de Publicação</p>
-            <span>27 set.</span>
-          </PostPublished>
-          <PostPublished>
-            <p>Testes de Publicação</p>
-            <span>27 set.</span>
-          </PostPublished>
-          <PostPublished>
-            <p>Testes de Publicação</p>
-            <span>27 set.</span>
-          </PostPublished>
-          <PostPublished>
-            <p>Testes de Publicação</p>
-            <span>27 set.</span>
-          </PostPublished>
-          <PostPublished>
-            <p>Testes de Publicação</p>
-            <span>27 set.</span>
-          </PostPublished>
-          <PostPublished>
-            <p>Testes de Publicação</p>
-            <span>27 set.</span>
-          </PostPublished>
-          <PostPublished>
-            <p>Testes de Publicação</p>
-            <span>27 set.</span>
-          </PostPublished>
-          <PostPublished>
-            <p>Testes de Publicação</p>
-            <span>27 set.</span>
-          </PostPublished>
+          <ScrollableContent>
+            {posts.map((post: Post) => (
+              <PostPublished key={post.id}>
+                <p>{post.title}</p>
+                <span>{post.created_at}</span>
+              </PostPublished>
+            ))}
+          </ScrollableContent>
         </Box>
         <Box id="activity">
           <p>Resumo das Atividades da Semana</p>
           <Activity>
-            <FiShare2 />
-            {activitySum.posts} Posts
+            <FiZap />
+            {exp} XP
+          </Activity>
+          <Activity>
+            <FiFileText />
+            {activity.postsCreated} Posts
           </Activity>
           <Activity>
             <FiCoffee />
-            {activitySum.comments} Comentarios
+            {activity.commentsCreated} Comentarios
           </Activity>
           <Activity>
-            <FiZap />
-            {activitySum.exp} XP
+            <FiThumbsUp />
+            {activity.postsLiked} Posts Curtidos
+          </Activity>
+          <Activity>
+            <FiThumbsUp />
+            {activity.commentsLiked} Commentarios Curtidos
           </Activity>
         </Box>
         <Box id="interactions">
           <p>Interações</p>
+          <ScrollableContent>
+            <Interaction>
+              <a href="">
+                {`Algum Usuario comentou seu post "Avançando com o Desenvolvimento"`}
+              </a>
+              <span>7h ago</span>
+            </Interaction>
+          </ScrollableContent>
         </Box>
       </Container>
     </>

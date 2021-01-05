@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
-const ListPostsQuery = gql``;
+const ListPostsQuery = gql`]
+`;
 
 export default ListPostsQuery;

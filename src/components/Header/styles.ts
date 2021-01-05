@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.header`
-  padding: 32px;
+  padding: 8px;
   background: #28262e;
 `;
 export const HeaderContent = styled.div`
@@ -9,6 +9,7 @@ export const HeaderContent = styled.div`
   margin: 0 auto;
   display: flex;
   align-items: center;
+  justify-content: space-around;
 
   > img {
     height: 80px;

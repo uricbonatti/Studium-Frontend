@@ -1,7 +1,23 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
-const api = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+const httpLink = new HttpLink({
+  uri: 'http://localhost:4000',
+  credentials: 'same-origin',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('@Studium:token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+const graphqlApi = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
@@ -10,4 +26,4 @@ const api = new ApolloClient({
   },
 });
 
-export default api;
+export default graphqlApi;

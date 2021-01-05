@@ -9,13 +9,13 @@ import { AuthProvider } from './hooks/auth';
 
 const App: React.FC = () => (
   <>
-    <AuthProvider>
-      <ApolloProvider client={graphqlApi}>
+    <ApolloProvider client={graphqlApi}>
+      <AuthProvider>
         <Router>
           <Routes />
         </Router>
-      </ApolloProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </ApolloProvider>
     <GlobalStyle />
   </>
 );

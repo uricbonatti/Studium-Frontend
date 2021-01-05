@@ -18,7 +18,7 @@ const Header: React.FC = () => {
         {user && (
           <>
             <Profile>
-              <img src={user.avatar || defaultUser} alt={user.name} />
+              <img src={user.avatar_url || defaultUser} alt={user.name} />
               <div>
                 <span>Bem-vindo,</span>
 
