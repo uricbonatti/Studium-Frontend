@@ -1,8 +1,8 @@
-import React from 'react'
-import './styles.css'
-import Post from '../Post'
+import React from 'react';
+import './styles.css';
+import Post from '../Post';
 
-function PostList() {
+const PostList: React.FC = () => {
   return (
     <div className="post-list-container">
       <div className="post-list-items">
@@ -21,9 +21,7 @@ function PostList() {
         <Post />
       </div>
     </div>
-  )
-}
+  );
+};
 
-
-
-export default PostList
+export default PostList;

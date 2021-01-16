@@ -1,15 +1,15 @@
 import React from 'react';
-import './styles.css'
+import './styles.css';
 import Header from '../../components/Header';
 import PostList from '../../components/PostList';
 
-function Home () {
+const Home: React.FC = () => {
   return (
     <>
-      <Header/>
+      <Header />
       <PostList />
     </>
-  )
-}
+  );
+};
 
 export default Home;
