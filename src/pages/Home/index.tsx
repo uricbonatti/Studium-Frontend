@@ -1,12 +1,13 @@
 import React from 'react';
+import './styles.css';
 import Header from '../../components/Header';
+import PostList from '../../components/PostList';
 
 const Home: React.FC = () => {
-  const text = 'Olá';
   return (
     <>
       <Header />
-      <h1>{text}</h1>
+      <PostList />
     </>
   );
 };
