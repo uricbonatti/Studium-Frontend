@@ -7,6 +7,7 @@ const Home: React.FC = () => {
   return (
     <>
       <Header />
+
       <PostList />
     </>
   );
