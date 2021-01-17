@@ -19,7 +19,7 @@ interface SignInFormData {
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { signIn, user } = useAuth();
+  const { signIn } = useAuth();
   const history = useHistory();
 
   const handleSubmit = useCallback(
@@ -34,7 +34,7 @@ const SignIn: React.FC = () => {
         });
         await schema.validate(data, { abortEarly: false });
         await signIn({ email: data.email, password: data.password });
-        console.table(user);
+
         history.push('/home');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -44,7 +44,7 @@ const SignIn: React.FC = () => {
         }
       }
     },
-    [signIn, history, user],
+    [signIn, history],
   );
 
   return (

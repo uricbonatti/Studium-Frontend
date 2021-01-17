@@ -1,32 +1,32 @@
 /* eslint-disable no-multi-str */
 import React, {
   useCallback,
-  TextareaHTMLAttributes,
+  useEffect,
   useRef,
   useState,
+  TextareaHTMLAttributes,
 } from 'react';
+
 import { Editor as TinyEditor } from '@tinymce/tinymce-react';
 
 import { Container } from './styles';
-import { useEffect } from 'react';
 import { useField } from '@unform/core';
 
 interface EditorProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   name: string;
   containerStyle?: object;
-  skin?: string;
+  skin?: 'dark' | 'default';
 }
 
 const Editor: React.FC<EditorProps> = ({
-  skin,
+  skin = 'default',
   containerStyle = {},
   name,
-  ...rest
 }) => {
   const editorRef = useRef<TinyEditor>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
-  const { fieldName, error, defaultValue, registerField } = useField(name);
+  const { fieldName, error, registerField } = useField(name);
 
   const handleEditorFocus = useCallback(() => {
     setIsFocused(true);
@@ -58,20 +58,27 @@ const Editor: React.FC<EditorProps> = ({
         ref={editorRef}
         onBlur={handleEditorBlur}
         onFocus={handleEditorFocus}
-        initialValue="<p>This is the initial content of the editor</p>"
+        initialValue=""
         init={{
-          height: 500,
+          placeholder: 'Insira o conteudo do post aqui',
+          width: '100%',
+          height: 100,
+          // skin_url: '',
+
+          // theme_url: '',
           menubar: false,
-          skin,
+          statusbar: false,
+          skin: `oxide${skin === 'dark' ? '-dark' : ''}`,
+          content_css: skin,
           plugins: [
             'advlist autolink lists link image charmap print preview anchor',
             'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount codesample',
+            'insertdatetime media table paste code help wordcount codesample ',
           ],
           toolbar:
             'undo redo | formatselect codesample| bold italic backcolor | \
         alignleft aligncenter alignright alignjustify | \
-        bullist numlist outdent indent | removeformat | help | ',
+        bullist numlist outdent indent | removeformat | help  ',
         }}
         onEditorChange={handleEditorChange}
       />

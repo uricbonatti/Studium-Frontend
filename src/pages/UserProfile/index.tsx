@@ -7,7 +7,6 @@ import {
   FiEdit,
 } from 'react-icons/fi';
 import { FaLinkedin, FaGithubSquare } from 'react-icons/fa';
-import { useMutation } from '@apollo/client';
 
 import Header from '../../components/Header';
 import { useAuth, User } from '../../hooks/auth';
@@ -28,6 +27,7 @@ import {
   Description,
 } from './styles';
 import ModalEditUser from '../../components/ModalEditUser';
+import { Link } from 'react-router-dom';
 
 interface Post {
   id: string;
@@ -165,9 +165,9 @@ const UserProfile: React.FC = () => {
           <p>Interações</p>
           <ScrollableContent>
             <Interaction>
-              <a href="">
+              <Link to="/" href="">
                 {`Algum Usuario comentou seu post "Avançando com o Desenvolvimento"`}
-              </a>
+              </Link>
               <span>7h ago</span>
             </Interaction>
           </ScrollableContent>

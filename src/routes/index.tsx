@@ -7,6 +7,7 @@ import UserProfile from '../pages/UserProfile';
 import Route from './Route';
 import SignIn from '../pages/SignIn/index';
 import SignUp from '../pages/SignUp/index';
+import PostCreation from './../pages/PostCreation/index';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -15,6 +16,7 @@ const Routes: React.FC = () => (
     <Route path="/home" component={Home} isPrivate />
     <Route path="/signin" component={SignIn} />
     <Route path="/signup" component={SignUp} />
+    <Route path="/post/new" component={PostCreation} isPrivate />
   </Switch>
 );
 export default Routes;

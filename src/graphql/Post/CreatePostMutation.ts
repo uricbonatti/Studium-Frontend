@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 /*
-O objeto CreatePostTag tem o seguitne formato:
+O objeto CreatePostTag tem o seguinte formato:
 {
   tag_id: String!
 }
