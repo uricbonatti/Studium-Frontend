@@ -1,22 +1,22 @@
 import { ApolloClient, HttpLink, InMemoryCache, from } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { onError } from '@apollo/client/link/error'
+import { onError } from '@apollo/client/link/error';
 
 const errorLint = onError(({ graphQLErrors }) => {
   if (graphQLErrors) {
-    graphQLErrors.map(({ message }) => {
-      alert(`Graphql erro: ${message} in API:${process.env.REACT_APP_API_DEV}`)
-    })
+    graphQLErrors.forEach(({ message }) => {
+      alert(`Graphql erro: ${message} in API:${process.env.REACT_APP_API_DEV}`);
+    });
   }
-})
+});
 
 const httpLink = from([
   errorLint,
   new HttpLink({
-    uri: process.env.REACT_APP_API_DEV,
-    credentials: 'same-origin'
-  })
-])
+    uri: process.env.REACT_APP_API_URL || 'http://localhost:4000',
+    credentials: 'same-origin',
+  }),
+]);
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('@Studium:token');

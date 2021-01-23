@@ -2,8 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactSelect, {
   OptionTypeBase,
   Props as ReactSelectProps,
-  StylesConfig,
-  Styles,
 } from 'react-select';
 import { IconBaseProps } from 'react-icons';
 import { useField } from '@unform/core';

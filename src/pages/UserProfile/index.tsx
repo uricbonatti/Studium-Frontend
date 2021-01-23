@@ -67,7 +67,6 @@ const UserProfile: React.FC = () => {
         setPosts([...lastWeekPosts]);
         setActivity({ ...lastWeek });
         setExp(weekExp);
-        console.table(resp.data.userSummary);
       })
       .catch((err) => console.error(err));
   }, [user.id]);
