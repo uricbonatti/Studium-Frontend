@@ -1,23 +1,58 @@
-import React from 'react';
+import React, {ReactNode } from 'react';
+import { Posts } from '../../utils/types'
 import './styles.css';
 
-const Post: React.FC = () => {
+type Props = {
+  post: Posts
+}
+
+const  handleLike = () => {alert("Gostei")}
+const  handleImprove = () => {alert("Melhorar")}
+const  handleDenounce = () => {alert("Denunciar")}
+const  handleRead = () => {alert("Ler")}
+const  handleEdit = () => {alert("Editar")}
+
+const Post: React.FC<Props> = ({post}) => {
   return (
     <div className="post-card-container">
       <header className="post-card-header">
-        <h1>Como programar em React</h1>
+        <div>
+          <img className="post-card-header-avatar" src={post?.image_url} alt="Avatar" />
+        </div>
+        <main>
+          <h1>{post.title}</h1>
+          <h4>Publicado por: {post.author?post.author:"Anonimo"}</h4>
+        </main>
       </header>
       <div className="post-card-description">
-        <p>Ferramentas usadas são as melhores</p>
-        <p>
-          {' '}
-          id: ObjectID; title: string; image_url: string; body: string; author:
-          OmitedUser; users_liked: MongoObjectID[]; category: Category; tags:
-          Tag[]; slug: string; created_at: Date; updated_at: Date;
-        </p>
+        {post.body}
       </div>
       <footer className="post-card-footer">
-        <h3>link</h3>
+        <div 
+          className="post-card-footer-button" 
+          data-toggle="tooltip" 
+          title="Gostei"
+          onClick={handleLike}>🎁</div>
+        <div 
+          className="post-card-footer-button " 
+          data-toggle="tooltip" 
+          title="Precisa melhorar"
+          onClick={handleImprove}>🥺</div>
+        <div 
+          className="post-card-footer-button " 
+          data-toggle="tooltip" 
+          title="Denunciar"
+          onClick={handleDenounce}>🕵️‍♂️</div>
+        <div 
+          className="post-card-footer-button " 
+          data-toggle="tooltip" 
+          title="Ler na integra"
+          onClick={handleRead}>🔎</div>
+        <div 
+          className="post-card-footer-button " 
+          data-toggle="tooltip" 
+          title="Editar"
+          onClick={handleEdit}>✍</div>
       </footer>
     </div>
   );
