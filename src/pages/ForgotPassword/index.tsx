@@ -14,6 +14,7 @@ import ForgotPasswordMutation from './../../graphql/User/ForgotPasswordMutations
 import getValidationErrors from './../../utils/getValidationErrors';
 
 import logoImg from '../../assets/LogoStudium.svg';
+import { useEffect } from 'react';
 
 interface ForgotPasswordFormData {
   email: string;
@@ -35,6 +36,9 @@ const ForgotPassword: React.FC = () => {
       },
     },
   );
+  useEffect(() => {
+    console.log('pagina sendo carregada');
+  }, []);
 
   const handleSubmit = useCallback(
     async (data: ForgotPasswordFormData) => {
