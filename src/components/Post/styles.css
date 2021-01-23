@@ -5,6 +5,7 @@
   cursor: pointer;
   background-color: #fff;
   color: #000;
+  height: 300px;
 }
 
 .post-card-container:hover {
@@ -22,6 +23,7 @@
   text-align: center;
   width: 100%;
   display: flex;
+  
 }
 .post-card-header-avatar{
   width: 50px;
@@ -52,6 +54,7 @@
   border: 2px;
   border-color: #E6E6E6;
   display: flex;
+  bottom:0;
 }
 
 .post-card-footer-button{
@@ -59,6 +62,14 @@
   font-size: 16px;
   margin: 8px;
   color:red;
+  bottom:0;
+}
+
+.post-card-footer-button:hover{
+  transform: scale(2.5);
+  transition-duration: 300ms;
+  transition-delay: 50ms;
+  transform-style:flat;
 }
 
 

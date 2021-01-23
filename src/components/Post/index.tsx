@@ -1,38 +1,58 @@
-import React from 'react';
-import Avatar from './img_avatar.png'
-
+import React, {ReactNode } from 'react';
+import { Posts } from '../../utils/types'
 import './styles.css';
 
-const Post: React.FC = () => {
+type Props = {
+  post: Posts
+}
+
+const  handleLike = () => {alert("Gostei")}
+const  handleImprove = () => {alert("Melhorar")}
+const  handleDenounce = () => {alert("Denunciar")}
+const  handleRead = () => {alert("Ler")}
+const  handleEdit = () => {alert("Editar")}
+
+const Post: React.FC<Props> = ({post}) => {
   return (
     <div className="post-card-container">
       <header className="post-card-header">
         <div>
-          <img className="post-card-header-avatar" src={Avatar} alt="Avatar" />
+          <img className="post-card-header-avatar" src={post?.image_url} alt="Avatar" />
         </div>
-        <div>
-          <h1>Como programar em Node, React e React Native</h1>
-          <h5>por Fulano de Tal há 3 dias </h5>
-        </div>
+        <main>
+          <h1>{post.title}</h1>
+          <h4>Publicado por: {post.author?post.author:"Anonimo"}</h4>
+        </main>
       </header>
       <div className="post-card-description">
-        <p>Ferramentas usadas são as melhores</p>
-        <p>
-          {' '}
-          Declarativo
-
-          React faz com que a criação de UIs interativas seja uma tarefa fácil. Crie views simples para cada estado na sua aplicação, e o React irá atualizar e renderizar de forma eficiente apenas os componentes necessários na medida em que os dados mudam.
-          Views declarativas fazem com que seu código seja mais previsível e simples de depurar.
-
-        </p>
+        {post.body}
       </div>
       <footer className="post-card-footer">
-        {' '}
-        <div className="post-card-footer-button" data-toggle="tooltip" title="Gostei">🎁</div>
-        <div className="post-card-footer-button " data-toggle="tooltip" title="Precisa melhorar">🥺</div>
-        <div className="post-card-footer-button " data-toggle="tooltip" title="Denunciar">🕵️‍♂️</div>
-        <div className="post-card-footer-button " data-toggle="tooltip" title="Ler na integra">🔎</div>
-        <div className="post-card-footer-button " data-toggle="tooltip" title="Editar">✍</div>
+        <div 
+          className="post-card-footer-button" 
+          data-toggle="tooltip" 
+          title="Gostei"
+          onClick={handleLike}>🎁</div>
+        <div 
+          className="post-card-footer-button " 
+          data-toggle="tooltip" 
+          title="Precisa melhorar"
+          onClick={handleImprove}>🥺</div>
+        <div 
+          className="post-card-footer-button " 
+          data-toggle="tooltip" 
+          title="Denunciar"
+          onClick={handleDenounce}>🕵️‍♂️</div>
+        <div 
+          className="post-card-footer-button " 
+          data-toggle="tooltip" 
+          title="Ler na integra"
+          onClick={handleRead}>🔎</div>
+        <div 
+          className="post-card-footer-button " 
+          data-toggle="tooltip" 
+          title="Editar"
+          onClick={handleEdit}>✍</div>
       </footer>
     </div>
   );

@@ -15,12 +15,8 @@ query listPosts ($filter: PostFilter) {
         updated_at
         comments {
             id
-            author {
-                id
-                nome
-                avatar_url
-            }
-            creation_at
+           
+            created_at
             updated_at
             body
             post_id
