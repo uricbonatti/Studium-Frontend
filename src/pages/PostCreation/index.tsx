@@ -4,13 +4,15 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
-import { FiBookmark, FiFileText, FiLink } from 'react-icons/fi';
+import { FiBookmark, FiFileText, FiLink, FiList } from 'react-icons/fi';
 
 import Header from '../../components/Header';
 import Editor from '../../components/Editor';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import TextArea from './../../components/TextArea/index';
+import SimpleSelect from './../../components/SimpleSelect/index';
+import MultiSelect from './../../components/MultiSelect/index';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
@@ -86,6 +88,7 @@ const PostCreation: React.FC = () => {
     async (data: PostCreationFormData) => {
       try {
         formRef.current?.setErrors({});
+
         const schema = Yup.object().shape({
           title: Yup.string()
             .required('Titulo Obrigatório')
@@ -113,16 +116,17 @@ const PostCreation: React.FC = () => {
             }),
           ),
         });
-        await schema.validate(data, { abortEarly: false });
-        await createPostMutation({
-          variables: {
-            title: data.title,
-            image_url: data.image_url,
-            body: data.body,
-            category_id: data.category_id,
-            tag_ids: data.tag_ids,
-          },
-        });
+        console.table(data);
+        // await schema.validate(data, { abortEarly: false });
+        // await createPostMutation({
+        //   variables: {
+        //     title: data.title,
+        //     image_url: data.image_url,
+        //     body: data.body,
+        //     category_id: data.category_id,
+        //     tag_ids: data.tag_ids,
+        //   },
+        // });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -146,6 +150,16 @@ const PostCreation: React.FC = () => {
               name="image_url"
               icon={FiLink}
               placeholder="Link da Imagem"
+            />
+            <SimpleSelect
+              name="category_id"
+              icon={FiList}
+              placeholder="Selecione uma categoria"
+            />
+            <MultiSelect
+              name="tag_is"
+              icon={FiList}
+              placeholder="Selecione as Tags do Post"
             />
             <TextArea name="resume" icon={FiFileText} placeholder="Resumo" />
             <Editor name="body" />

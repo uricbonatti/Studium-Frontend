@@ -26,7 +26,7 @@ const Editor: React.FC<EditorProps> = ({
   const editorRef = useRef<TinyEditor>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
-  const { fieldName, error, registerField } = useField(name);
+  const { fieldName, error, registerField, defaultValue } = useField(name);
 
   const handleEditorFocus = useCallback(() => {
     setIsFocused(true);
@@ -40,7 +40,7 @@ const Editor: React.FC<EditorProps> = ({
     registerField({
       name: fieldName,
       ref: editorRef.current,
-      path: 'value',
+      path: 'currentContent',
     });
   }, [fieldName, registerField]);
 
@@ -58,14 +58,11 @@ const Editor: React.FC<EditorProps> = ({
         ref={editorRef}
         onBlur={handleEditorBlur}
         onFocus={handleEditorFocus}
-        initialValue=""
+        initialValue={defaultValue}
         init={{
           placeholder: 'Insira o conteudo do post aqui',
           width: '100%',
           height: 100,
-          // skin_url: '',
-
-          // theme_url: '',
           menubar: false,
           statusbar: false,
           skin: `oxide${skin === 'dark' ? '-dark' : ''}`,
