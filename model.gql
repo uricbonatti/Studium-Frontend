@@ -1,0 +1,292 @@
+directive @cacheControl(
+  maxAge: Int
+  scope: CacheControlScope
+) on FIELD_DEFINITION | OBJECT | INTERFACE
+# Exposes a URL that specifies the behaviour of this scalar.
+directive @specifiedBy(
+  # The URL that specifies the behaviour of this scalar.
+  url: String!
+) on SCALAR
+type AuthenticateUser {
+  token: ID!
+  user: User!
+}
+
+type Author {
+  id: ObjectID!
+  name: String!
+  avatar_url: URL
+}
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+type Category {
+  id: ObjectID
+  name: String!
+}
+
+input ClosePostReport {
+  id: ObjectID!
+  feedback: String
+  action: String!
+}
+
+type Comment {
+  id: String
+  author: Author!
+  created_at: Date!
+  updated_at: Date!
+  body: String!
+  post_id: ObjectID!
+}
+
+input CreateCategory {
+  name: String!
+}
+
+input CreateComment {
+  post_id: ObjectID!
+  body: String!
+}
+
+input CreatePost {
+  title: String!
+  image_url: URL
+  body: String!
+  category_id: ObjectID!
+  tag_ids: [CreatePostTag]
+}
+
+input CreatePostTag {
+  tag_id: ObjectID!
+}
+
+input CreateTag {
+  name: String!
+  category_id: ObjectID!
+}
+
+input CreateUser {
+  email: EmailAddress!
+  name: String!
+  description: String
+  password: String!
+  github: String
+  linkedin: String
+}
+
+# A field whose value is a Currency: https://en.wikipedia.org/wiki/ISO_4217.
+scalar Currency
+
+# A date string, such as 2007-12-03, compliant with the `full-date` format
+# outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for
+# representation of dates and times using the Gregorian calendar.
+scalar Date
+
+# A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
+# `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO
+# 8601 standard for representation of dates and times using the Gregorian calendar.
+scalar DateTime
+
+input DeleteUser {
+  email: EmailAddress!
+}
+
+# A field whose value conforms to the standard internet email address format as
+# specified in RFC822: https://www.w3.org/Protocols/rfc822/.
+scalar EmailAddress
+
+input EmailInput {
+  email: EmailAddress!
+}
+
+# A field whose value is a generic Universally Unique Identifier: https://en.wikipedia.org/wiki/Universally_unique_identifier.
+scalar GUID
+
+input LoginData {
+  email: EmailAddress!
+  password: String!
+}
+
+type Mutation {
+  createCategory(data: CreateCategory): Category
+  likeComment(comment_id: ObjectID): Int
+  createComment(data: CreateComment): Comment!
+  updateComment(id: String, data: UpdateComment): Comment
+  deleteComment(id: String): String
+  createPostReport(data: OpenPostReport): NewPostReport
+  closePostReport(data: ClosePostReport): PostReport
+  likePost(post_id: ObjectID): Int
+  createPost(data: CreatePost): Post!
+  updatePost(id: String, data: UpdatePost): Post
+  deletePost(id: String): String
+  createTag(data: CreateTag): Tag
+  createUser(data: CreateUser): User
+  updateUser(data: UpdateUser): User
+  deleteUser(data: DeleteUser): Void
+  forgotPassword(data: EmailInput): Void
+  resetPassword(data: ResetPassword): Void
+}
+
+type NewPostReport {
+  id: ObjectID
+  post_id: ObjectID
+  title: String
+  body: String
+  closed: Boolean
+  created_at: Date
+}
+
+# A field whose value conforms with the standard mongodb object ID as described
+# here: https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectId.
+# Example: 5e5677d71bdc2ae76344968c
+scalar ObjectID
+
+input OpenPostReport {
+  post_id: ObjectID!
+  body: String
+  title: String!
+}
+
+# A field whose value conforms to the standard E.164 format as specified in:
+# https://en.wikipedia.org/wiki/E.164. Basically this is +17895551234.
+scalar PhoneNumber
+
+# A field whose value is a valid TCP port within the range of 0 to 65535:
+# https://en.wikipedia.org/wiki/Transmission_Control_Protocol#TCP_ports
+scalar Port
+
+type Post {
+  id: String
+  author: Author!
+  title: String!
+  image_url: URL
+  body: String!
+  category: Category
+  created_at: Date!
+  updated_at: Date!
+  comments: [Comment]
+  tags: [Tag]
+}
+
+input PostFilter {
+  category_id: ObjectID
+  part_of_title: String
+  author_id: ObjectID
+}
+
+type PostReport {
+  id: ObjectID
+  post_id: ObjectID
+  title: String
+  body: String
+  closed: Boolean
+  feedback: String
+  action: String!
+  created_at: Date
+  updated_at: Date
+}
+
+type Query {
+  listCategories: [Category]
+  userPostReports: [PostReport]
+  openPostReports: [PostReport]
+  showPostReport(id: String): PostReport
+  getPost(id: ObjectID): Post!
+  listPosts(filter: PostFilter): [Post]
+  getTag(id: ObjectID): Tag
+  listTags(filter: TagFilter): [Tag]
+  getUser(id: ObjectID!): User
+  login(data: LoginData): AuthenticateUser
+  userSummary(id: ObjectID!): UserSummary
+}
+
+input ResetPassword {
+  token: UUID!
+  password: String!
+  password_confirmation: String!
+}
+
+type Tag {
+  id: String
+  name: String!
+  category: Category!
+}
+
+input TagFilter {
+  category_id: ObjectID
+}
+
+# A time string at UTC, such as 10:15:30Z, compliant with the `full-time` format
+# outlined in section 5.6 of the RFC 3339profile of the ISO 8601 standard for
+# representation of dates and times using the Gregorian calendar.
+scalar Time
+
+input UpdateComment {
+  comment_id: ObjectID!
+  body: String!
+}
+
+input UpdatePost {
+  title: String
+  image_url: URL
+  body: String
+  category_id: ObjectID
+  tag_id: [String]
+}
+
+input UpdateUser {
+  email: EmailAddress!
+  name: String
+  password: String
+  description: String
+  old_password: String
+  github: String
+  linkedin: String
+  avatar_url: URL
+}
+
+# The `Upload` scalar type represents a file upload.
+scalar Upload
+
+# A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
+scalar URL
+
+type User {
+  id: ObjectID
+  name: String!
+  email: EmailAddress!
+  description: String
+  avatar_url: URL
+  github: String
+  linkedin: String
+  created_at: Date!
+  updated_at: Date!
+  level: Int!
+  exp_percent: Float!
+  access_level: String!
+}
+
+type UserActivity {
+  postsLiked: Int
+  postsCreated: Int
+  commentsLiked: Int
+  commentsCreated: Int
+}
+
+type UserSummary {
+  all: UserActivity
+  lastMonth: UserActivity
+  lastWeek: UserActivity
+  weekExp: Int
+  lastWeekPosts: [Post]
+}
+
+# A field whose value is a generic Universally Unique Identifier: https://en.wikipedia.org/wiki/Universally_unique_identifier.
+scalar UUID
+
+# Represents NULL values
+scalar Void
