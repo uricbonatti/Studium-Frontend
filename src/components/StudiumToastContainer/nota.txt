@@ -1,0 +1,2 @@
+O motivo da criação do componente foi apenas para integrar a estilização padrão
+e possibilitar que estilizações futuras possam ser realizadas

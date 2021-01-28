@@ -12,7 +12,7 @@ export const GET_POSTS = gql`
       id
       title
       image_url
-      resume
+
       body
       category {
         id

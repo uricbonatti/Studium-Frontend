@@ -10,6 +10,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { FiLock, FiLogIn, FiMail } from 'react-icons/fi';
+import toast from '../../utils/toast';
 import logoImg from '../../assets/LogoStudium.svg';
 
 interface SignInFormData {
@@ -34,7 +35,7 @@ const SignIn: React.FC = () => {
         });
         await schema.validate(data, { abortEarly: false });
         await signIn({ email: data.email, password: data.password });
-
+        toast.success('Login Realizado com Sucesso');
         history.push('/home');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {

@@ -14,11 +14,7 @@ interface SelectProps extends ReactSelectProps<OptionTypeBase> {
   containerStyle?: object;
   icon: React.ComponentType<IconBaseProps>;
 }
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
+
 const MultiSelect: React.FC<Omit<SelectProps, 'isMulti'>> = ({
   name,
   containerStyle = {},
@@ -67,7 +63,6 @@ const MultiSelect: React.FC<Omit<SelectProps, 'isMulti'>> = ({
         ref={selectRef}
         isMulti
         {...rest}
-        options={options}
       />
       {error && (
         <Error title={error}>

@@ -20,6 +20,8 @@ import { ButtonContainer, Container, Content } from './styles';
 
 import CreatePostMutation from './../../graphql/Post/CreatePostMutation';
 import ListCategoriesQuery from './../../graphql/Category/ListCategoriesQuery';
+import toast from '../../utils/toast';
+import ListTagsQuery from '../../graphql/Tag/ListTagsQuery';
 
 interface Tag {
   tag_id: string;
@@ -39,6 +41,10 @@ interface MutationData {
     id: string;
   };
 }
+interface SelectorCategory {
+  value: string;
+  label: string;
+}
 interface Category {
   id: string;
   name: string;
@@ -46,22 +52,29 @@ interface Category {
 interface IListCategory {
   listCategories?: Category[];
 }
+interface IListTags {
+  listTags?: Category[];
+}
 
 const PostCreation: React.FC = () => {
   const history = useHistory();
   const formRef = useRef<FormHandles>(null);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<SelectorCategory[]>([]);
+
+  const [tags, setTags] = useState<SelectorCategory[]>([]);
 
   //Arrumar a mutation antes de commitar
   const [
     createPostMutation,
-    { data: createData, error: createError },
+    { error: createError },
   ] = useMutation<MutationData>(CreatePostMutation, {
-    onCompleted: () => {
-      history.push(`/post/${createData?.createPost.id}`);
+    onCompleted: ({ createPost }) => {
+      console.log(createPost);
+      history.push(`/post/${createPost.id}`);
+      toast.success('Post criado com sucesso!');
     },
     onError: () => {
-      console.log(createError?.message);
+      console.log(createError);
     },
   });
 
@@ -70,19 +83,55 @@ const PostCreation: React.FC = () => {
     { data: categoriesData, error: categoriesError },
   ] = useLazyQuery<IListCategory>(ListCategoriesQuery, {
     onCompleted: () => {
-      categoriesData?.listCategories &&
-        setCategories([...categoriesData.listCategories]);
-      console.log(categories);
-      console.log(categoriesData?.listCategories);
+      if (!!categoriesData?.listCategories) {
+        const selectorCategories = categoriesData.listCategories.map(
+          (category) => {
+            return {
+              label: category.name,
+              value: category.id,
+            };
+          },
+        );
+        setCategories(selectorCategories);
+      }
     },
     onError: () => {
-      console.log(categoriesError?.message);
+      console.log(categoriesError);
+    },
+  });
+  const [
+    loadTags,
+    { data: tagsData, error: tagsError },
+  ] = useLazyQuery<IListTags>(ListTagsQuery, {
+    onCompleted: () => {
+      if (!!tagsData?.listTags) {
+        const selectorTags = tagsData.listTags.map((tag) => {
+          return {
+            label: tag.name,
+            value: tag.id,
+          };
+        });
+        setTags(selectorTags);
+      }
+    },
+    onError: () => {
+      console.log(tagsError);
     },
   });
 
   useEffect(() => {
     loadCategories();
   }, [loadCategories]);
+
+  // useEffect(() => {
+  //   loadTags({
+  //     variables: {
+  //       filter: {
+  //         category_id: currentCategory?.value,
+  //       },
+  //     },
+  //   });
+  // }, [currentCategory]);
 
   const handleSubmit = useCallback(
     async (data: PostCreationFormData) => {
@@ -109,31 +158,30 @@ const PostCreation: React.FC = () => {
           ),
           //Precisa validar esta condição
           tag_ids: Yup.array().of(
-            Yup.object().shape({
-              tag_id: Yup.string().required(
-                'É necessario selecionar ao menos uma Tag',
-              ),
-            }),
+            Yup.string().required('É necessario selecionar ao menos uma Tag'),
           ),
         });
-        console.table(data);
-        // await schema.validate(data, { abortEarly: false });
-        // await createPostMutation({
-        //   variables: {
-        //     title: data.title,
-        //     image_url: data.image_url,
-        //     body: data.body,
-        //     category_id: data.category_id,
-        //     tag_ids: data.tag_ids,
-        //   },
-        // });
+        await schema.validate(data, { abortEarly: false });
+        await createPostMutation({
+          variables: {
+            data: {
+              title: data.title,
+              image_url: data.image_url,
+              body: data.body,
+              category_id: data.category_id,
+              tag_ids: data.tag_ids.map((tag) => {
+                return { tag_id: tag };
+              }),
+            },
+          },
+        });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
-          console.table(errors);
           formRef.current?.setErrors(errors);
           return;
         }
+        toast.error('Erro ao enviar o Post');
       }
     },
     [createPostMutation],
@@ -155,11 +203,24 @@ const PostCreation: React.FC = () => {
               name="category_id"
               icon={FiList}
               placeholder="Selecione uma categoria"
+              loadOptions={loadCategories}
+              options={categories}
+              onChange={(option: SelectorCategory) =>
+                loadTags({
+                  variables: {
+                    filter: {
+                      category_id: option.value,
+                    },
+                  },
+                })
+              }
             />
             <MultiSelect
-              name="tag_is"
+              name="tag_ids"
               icon={FiList}
               placeholder="Selecione as Tags do Post"
+              loadOptions={loadTags}
+              options={tags}
             />
             <TextArea name="resume" icon={FiFileText} placeholder="Resumo" />
             <Editor name="body" />

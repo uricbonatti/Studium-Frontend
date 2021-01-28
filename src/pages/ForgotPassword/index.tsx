@@ -1,4 +1,4 @@
-import React, { FC, useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { FiLogIn, FiMail } from 'react-icons/fi';
@@ -14,7 +14,7 @@ import ForgotPasswordMutation from './../../graphql/User/ForgotPasswordMutations
 import getValidationErrors from './../../utils/getValidationErrors';
 
 import logoImg from '../../assets/LogoStudium.svg';
-import { useEffect } from 'react';
+import toast from '../../utils/toast';
 
 interface ForgotPasswordFormData {
   email: string;
@@ -29,6 +29,7 @@ const ForgotPassword: React.FC = () => {
     {
       onCompleted: () => {
         setLoading(false);
+        toast.success('E-mail enviado com sucesso!');
       },
       onError: () => {
         setLoading(false);
@@ -36,9 +37,6 @@ const ForgotPassword: React.FC = () => {
       },
     },
   );
-  useEffect(() => {
-    console.log('pagina sendo carregada');
-  }, []);
 
   const handleSubmit = useCallback(
     async (data: ForgotPasswordFormData) => {

@@ -13,18 +13,15 @@ interface SelectProps extends ReactSelectProps<OptionTypeBase> {
   name: string;
   containerStyle?: object;
   icon: React.ComponentType<IconBaseProps>;
+  options: any[];
 }
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
 
 const SimpleSelect: React.FC<Omit<SelectProps, 'isMulti'>> = ({
   name,
   containerStyle = {},
   icon: Icon,
+  options,
+
   ...rest
 }) => {
   const selectRef = useRef<any | OptionTypeBase>(null);
