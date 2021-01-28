@@ -10,23 +10,33 @@ então para chamar esta mutation é preciso passar para a variavel tag_ids um
 array contendo objetos no formato CreatePostTag
 */
 
+// input CreatePost {
+//   title: String!
+//   image_url: URL
+//   body: String!
+//   category_id: ObjectID!
+//   tag_ids: [CreatePostTag!]!
+// }
+// input CreatePostTag {
+//   tag_id: ObjectID!
+// }
+// type Post {
+//   id: ObjectID!
+//   author: Author!
+//   title: String!
+//   image_url: URL
+//   resume: String!
+//   body: String!
+//   category: Category!
+//   created_at: Date!
+//   updated_at: Date!
+//   comments: [Comment]!
+//   tags: [Tag!]!
+// }
+
 const CreatePostMutation = gql`
-  mutation createPost(
-    $title: String!
-    $image_url: String
-    $body: String!
-    $category_id: String
-    $tag_ids: [CreatePostTag]
-  ) {
-    createPost(
-      data: {
-        title: $title
-        image_url: $image_url
-        body: $body
-        category_id: $category_id
-        tag_ids: $tag_ids
-      }
-    ) {
+  mutation createPost($data: CreatePost!) {
+    createPost(data: $data) {
       id
       author {
         id

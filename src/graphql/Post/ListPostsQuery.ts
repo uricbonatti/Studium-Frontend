@@ -1,35 +1,29 @@
-import  gql   from 'graphql-tag'
+import gql from 'graphql-tag';
+
+// input PostFilter {
+//   category_id: ObjectID
+//   part_of_title: String
+//   author_id: ObjectID
+// }
 
 export const GET_POSTS = gql`
-query listPosts ($filter: PostFilter) {
-    listPosts (filter: $filter) {
+  query listPosts($filter: PostFilter) {
+    listPosts(filter: $filter) {
+      id
+      title
+      image_url
+      resume
+      body
+      category {
         id
-        title
-        image_url
-        body
-        category {
-            id
-            name
-        }
-        created_at
-        updated_at
-        comments {
-            id
-           
-            created_at
-            updated_at
-            body
-            post_id
-        }
-        tags {
-            id
-            name
-            category {
-                id
-                name
-            }
-        }
+        name
+      }
+      created_at
+      updated_at
+      tags {
+        id
+        name
+      }
     }
-}
-`
-
+  }
+`;

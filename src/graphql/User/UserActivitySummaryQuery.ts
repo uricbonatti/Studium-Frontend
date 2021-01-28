@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 const UserActivitySummaryQuery = gql`
-  query userSummary($id: ID!) {
+  query userSummary($id: ObjectID!) {
     userSummary(id: $id) {
       lastWeek {
         postsLiked
