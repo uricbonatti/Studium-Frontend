@@ -1,8 +1,14 @@
 import { gql } from '@apollo/client';
 
+// type Category {
+//   id: ObjectID!
+//   name: String!
+// }
+
+//Return an array of categories
 const ListCategoriesQuery = gql`
-  query listCategories($id: String) {
-    listCategories(id: $id) {
+  query listCategories {
+    listCategories {
       id
       name
     }
