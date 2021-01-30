@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiPower } from 'react-icons/fi';
+import { FiPower, FiLogIn } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth';
@@ -15,6 +15,13 @@ const Header: React.FC = () => {
     <Container>
       <HeaderContent>
         <img src={logoImg} alt="Studium" />
+        {!user &&
+          <>
+            <Link to="/signin">
+              <FiLogIn /> <strong>Signin</strong>
+            </Link>
+          </>
+        }
         {user && (
           <>
             <Profile>

@@ -5,7 +5,7 @@ import Modal from '../Modal';
 import Input from '../Input';
 import { User } from '../../hooks/auth';
 import { Form } from './styles';
-import { FiCamera } from 'react-icons/fi';
+import { FiCamera, FiGithub, FiLinkedin, FiMail, FiKey, FiMeh, FiEdit } from 'react-icons/fi';
 import Button from '../Button/index';
 
 interface IModalProps {
@@ -45,26 +45,14 @@ const ModalEditUser: React.FC<IModalProps> = ({
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Form ref={formRef} onSubmit={handleSubmit} initialData={editingUser}>
         <h1>Editar Perfil</h1>
-        <Input
-          name="avatar_url"
-          placeholder="Cole o link aqui"
-          icon={FiCamera}
-        />
-        <Input name="name" placeholder="Cole o link aqui" icon={FiCamera} />
-        <Input
-          name="description"
-          placeholder="Cole o link aqui"
-          icon={FiCamera}
-        />
-        <Input name="github" placeholder="Cole o link aqui" icon={FiCamera} />
-        <Input name="linkedin" placeholder="Cole o link aqui" icon={FiCamera} />
-        <Input name="email" placeholder="Cole o link aqui" icon={FiCamera} />
-        <Input name="password" placeholder="Cole o link aqui" icon={FiCamera} />
-        <Input
-          name="old_password"
-          placeholder="Cole o link aqui"
-          icon={FiCamera}
-        />
+        <Input name="name" placeholder="Digite seu nome" icon={FiMeh} />
+        <Input name="description" placeholder="Descreva um pouco sobre você" icon={FiEdit} />
+        <Input name="avatar_url" placeholder="Cole o link do seu avatar" icon={FiCamera} />
+        <Input name="github" placeholder="Cole o link do seu github aqui" icon={FiGithub} />
+        <Input name="linkedin" placeholder="Cole o link do seu linkedin aqui" icon={FiLinkedin} />
+        <Input name="email" placeholder="Digite seu email" icon={FiMail} />
+        <Input name="password" placeholder="Digite sua senha" icon={FiKey} />
+        <Input name="old_password" placeholder="Confirme sua senha" icon={FiKey}/>
         <Button type="submit">Atualizar Perfil</Button>
       </Form>
     </Modal>
