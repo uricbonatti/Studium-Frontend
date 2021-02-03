@@ -8,13 +8,13 @@ interface ContainerProps {
 }
 
 export const Container = styled.div<ContainerProps>`
-  background: #232129;
+  background: var(--color-background);
   border-radius: 10px;
   padding: 16px;
   width: 100%;
 
-  color: #666360;
-  border: 2px solid #232129;
+  color: var(--color-text-placeholder);
+  border: 2px solid var(--color-border);
 
   display: flex;
   align-items: center;
@@ -25,26 +25,26 @@ export const Container = styled.div<ContainerProps>`
   ${(props) =>
     props.isErrored &&
     css`
-      border-color: #c53030;
+      border-color: var(--color-border);
     `}
   ${(props) =>
     props.isFocused &&
     css`
-      color: #ff9000;
-      border-color: #ff9000;
+      color: var(--color-border-focus);
+      border-color: var(--color-border-focus);
     `}
   ${(props) =>
     props.isFilled &&
     css`
-      color: #ff9000;
+      color: var(--color-border-focus);
     `}
   input {
-    color: #f4ede8;
+    color: var(--color-text-hover);
     flex: 1;
     border: 0;
     background: transparent;
     &::placeholder {
-      color: #666360;
+      color: var(--color-text-placeholder);
     }
   }
   svg {
@@ -59,11 +59,11 @@ export const Error = styled(Tooltip)`
     margin: 0;
   }
   span {
-    background: #c53030;
-    color: #fff;
+    background: var(--color-tertiary);
+    color: var(--color-text);
 
     &::before {
-      border-color: #c53030 transparent;
+      border-color: var(--color-border) transparent;
     }
   }
 `;
