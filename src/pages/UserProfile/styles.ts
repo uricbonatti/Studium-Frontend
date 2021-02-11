@@ -7,6 +7,7 @@ export const Container = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
   align-content: flex-start;
+  display:flex;
 `;
 
 export const Box = styled.div`

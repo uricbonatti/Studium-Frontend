@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.header`
   padding: 8px;
-  background: #28262e;
+  background: var(--color-background-header);
 `;
 export const HeaderContent = styled.div`
   max-width: 1120px;
@@ -20,7 +20,7 @@ export const HeaderContent = styled.div`
     border: 0;
   }
   svg {
-    color: #999591;
+    color: var(--color-background-svg);
     height: 20px;
     width: 20px;
   }
@@ -43,11 +43,11 @@ export const Profile = styled.div`
     line-height: 24px;
 
     span {
-      color: #f4ede8;
+      color: var(--color-text-hover);
     }
     a {
       text-decoration: none;
-      color: #ff9000;
+      color: var(--color-text-decorator);
       &:hover {
         opacity: 0.8;
       }

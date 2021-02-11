@@ -26,31 +26,31 @@ export const Container = styled.div<ContainerProps>`
   ${(props) =>
     props.isErrored &&
     css`
-      border-color: #c53030;
+      border-color: var(--color-border);
     `}
   ${(props) =>
     props.isFocused &&
     css`
-      color: #ff9000;
-      border-color: #ff9000;
+      color: var(--color-border-focus);
+      border-color: var(--color-border-focus);
     `}
   ${(props) =>
     props.isFilled &&
     css`
-      color: #ff9000;
+      color: var(--color-border-focus);
     `}
 
   svg {
     margin-right: 16px;
   }
   & .Select__indicator Select__dropdown-indicator {
-    color: #f4ede8;
+    color: var(--color-text-hover);
     flex: 1;
     border: 0;
     width: 100%;
     background: transparent;
     &::placeholder {
-      color: #666360;
+      color: var(--color-text-placeholder);
     }
   }
 `;
@@ -61,11 +61,11 @@ export const Error = styled(Tooltip)`
     margin: 0;
   }
   span {
-    background: #c53030;
-    color: #fff;
+    background: var(--color-background-tootip);
+    color: var(--color-text-description);
 
     &::before {
-      border-color: #c53030 transparent;
+      border-color: var(--color-background-tootip) transparent;
     }
   }
 `;
@@ -80,11 +80,11 @@ export const selectStyle: StylesConfig<OptionTypeBase, false> = {
   menu: (provided: object, state: any) => ({
     ...provided,
     width: '100%',
-    backgroundColor: '#666360',
+    backgroundColor: 'var(--color-text-placeholder)',
   }),
   option: (provided: object, state: any) => ({
     ...provided,
-    color: state.isFocused ? '#fff' : state.isSelected ? '#232129' : '#ff9000',
+    color: state.isFocused ? 'var(--color-text)' : state.isSelected ? 'var(--color-text-title)' : 'var(--color-text-decorator)',
     backgroundColor: state.isFocused
       ? '#232129'
       : state.isSelected
