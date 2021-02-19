@@ -26,41 +26,41 @@ const Post: React.FC<Props> = ({ post }) => {
   return (
     <Container>
       <PostCardContainer>
-      <PostCardHeader>
-        <PostCardHeaderAvatar src={post?.image_url } />
-        <PostCardHeaderTitle> {post.title} </PostCardHeaderTitle>
-        <PostCardHeaderAuthor>Publicado por: {post.author ? post.author : 'Anonimo'}</PostCardHeaderAuthor>
-      </PostCardHeader>
+          <PostCardHeader>
+            <PostCardHeaderAvatar src={post?.image_url } />
+            <PostCardHeaderTitle> {post.title} </PostCardHeaderTitle>
+            <PostCardHeaderAuthor>Publicado por: {post.author ? post.author : 'Anonimo'}</PostCardHeaderAuthor>
+          </PostCardHeader>
 
-      <PostCardDescription>{post.body}</PostCardDescription>
+          <PostCardDescription>{post.body}</PostCardDescription>
 
-      <PostCardFooter>
-        <Button data-toggle="tooltip" title="Gostei"
-          onClick={handleLike}>
-          <span role="img" aria-labelledby="like"> 🎁 </span>
-        </Button>
+          <PostCardFooter>
+            <Button data-toggle="tooltip" title="Gostei"
+              onClick={handleLike}>
+              <span role="img" aria-labelledby="like"> 🎁 </span>
+            </Button>
 
-        <Button data-toggle="tooltip" title="Precisa melhorar"
-          onClick={handleImprove}>
-          <span role="img" aria-labelledby="like">{' '}🥺</span>
-        </Button>
+            <Button data-toggle="tooltip" title="Precisa melhorar"
+              onClick={handleImprove}>
+              <span role="img" aria-labelledby="like">{' '}🥺</span>
+            </Button>
 
-        <Button data-toggle="tooltip" title="Denunciar"
-          onClick={handleDenounce}>
-          <span role="img" aria-labelledby="like">🕵️‍♂️</span>
-        </Button>
+            <Button data-toggle="tooltip" title="Denunciar"
+              onClick={handleDenounce}>
+              <span role="img" aria-labelledby="like">🕵️‍♂️</span>
+            </Button>
 
-        <Button data-toggle="tooltip" title="Ler na integra"
-          onClick={handleRead}>
-          <span role="img" aria-labelledby="like">🔎</span>
-        </Button>
+            <Button data-toggle="tooltip" title="Ler na integra"
+              onClick={handleRead}>
+              <span role="img" aria-labelledby="like">🔎</span>
+            </Button>
 
-        <Button data-toggle="tooltip" title="Editar"
-          onClick={handleEdit}>
-          <span role="img" aria-labelledby="like">✍</span>
-        </Button>
+            <Button data-toggle="tooltip" title="Editar"
+              onClick={handleEdit}>
+              <span role="img" aria-labelledby="like">✍</span>
+            </Button>
 
-      </PostCardFooter>
+          </PostCardFooter>
         </PostCardContainer>
       </Container>
   );

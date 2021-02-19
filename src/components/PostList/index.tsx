@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Container, ContainerPost} from './styles';
+import {Container} from './styles';
 import Post from '../Post';
 import { useQuery } from '@apollo/client'
 import { GET_POSTS } from '../../graphql/Post/ListPostsQuery'
@@ -15,14 +15,14 @@ const PostList: React.FC = ()  => {
   if (error) return <p>Erro inesperado: {error} ...</p>
   return (
     <Container>
-      <ContainerPost>
+
         {posts.map(post => (
           <Post
             key={post.id}
             post={post}
           />
         ))}
-        </ContainerPost>
+
     </Container>
   );
 };

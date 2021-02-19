@@ -1,35 +1,47 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  box-shadow: 0px 4px 20px var(--color-box-shadow);
-  border-radius: 10px;
-  padding: 16px;
-  cursor: pointer;
-  background-color:var(--color-background-card);
-  color: var(--color-text-contrast);
-  height: 300px;
+export const Container = styled.article`
+  background-color: var(--color-background-card);
+  flex-direction: row;
+
+  box-shadow: 0 4px 8px 0 var(--color-box-shadow);
+  max-width: 90vw;
+  margin: auto;
+  text-align: center;
+
+  border-radius: 5%;
+  margin: 16px;
+  padding:16px;
+
+  width: 30vw;
+  height: 50vh;
+
+  &:hover{
+    box-shadow: 0 8px 16px 0 var(--color-box-shadow);
+
+  }
+
+  &:first-child{
+    background-color:red;
+  }
 `;
 
 export const PostCardContainer = styled.div `
-
+  width: 100%;
+  height: 100%;
 `
 
 export const PostCardHeader = styled.header `
-  background:var(--color-background-header)
-  font-weight: bold;
-  font-size: var(--size-font-text);
-  line-height: 25px;
-  letter-spacing: -0.015em;
-  text-align: center;
-  width: 100%;
-  display: flex;
+  margin-top: 0;
 `
 
-
 export const PostCardHeaderAvatar = styled.img `
-  width: 50px;
-  height: 50px;
-  border-radius: 80%;
+  border-radius: 50%;
+  flex-direction: row;
+  width: 100px;
+  height: 100px;
+
+  align-content: flex-start;
 
 `
 export const PostCardHeaderAuthor = styled.h3 `
@@ -40,36 +52,25 @@ export const PostCardHeaderTitle = styled.h1 `
 
 `
 
-export const PostCardDescription = styled.p `
+export const PostCardDescription = styled.main `
 
 `
 
 export const PostCardFooter = styled.footer `
-  background:var(--color-background-header)
-  border-top: 1px solid var(--color-border);
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 33px;
-  letter-spacing: -0.015em;
-  border: 2px;
-  border-color: var(--color-border-focus);
-  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid red;
+
+  position: unset;
+  margin-bottom:0;
   bottom:0;
+
 `
 
 export const Button = styled.button `
-
-  background: transparent;
-  font-size: 16px;
-  border-radius: 3px;
-  color: palevioletred;
-  border: 2px solid palevioletred;
-  margin: 0 1em;
-  padding: 0 1em;
-  transition: 0.5s all ease-out;
-
-  &:hover {
-    background-color: palevioletred;
-    color: white;
-  }
+  color: magenta;
+  margin:8px;
+  padding: 2px;
+  outline: 0;
 `
+
