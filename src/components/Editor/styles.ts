@@ -11,29 +11,29 @@ export const Container = styled.div<ContainerProps>`
   border-radius: 10px;
   padding: 16px;
   width: 100%;
-  color: #666360;
+  color: var(--color-text-title);
   border: 2px solid #232129;
   display: flex;
   align-items: center;
   ${(props) =>
     props.isErrored &&
     css`
-      border-color: #c53030;
+      border-color: var(--color-border:#c53030;);
     `}
   ${(props) =>
     props.isFocused &&
     css`
-      color: #ff9000;
-      border-color: #ff9000;
+      color: var(--color-border-focus);
+      border-color: var(--color-border-focus);
     `}
   ${(props) =>
     props.isFilled &&
     css`
-      color: #ff9000;
+      color: var(--color-border-focus);
     `}
     //Validar isso
   textarea {
-    color: #f4ede8;
+    color: var(--color-text-hover);
     flex: 1;
     border: 0;
     background: transparent;
